@@ -18,12 +18,12 @@ function saveToExcel(businesses) {
     // Define columns
     worksheet.columns = [
         { header: "Place ID", key: "placeId" },
+        { header: "Store Name", key: "storeName" },
         { header: "Address", key: "address" },
         { header: "Category", key: "category" },
-        { header: "Phone", key: "phone" },
+        // { header: "Phone", key: "phone" },
         { header: "Google URL", key: "googleUrl" },
-        { header: "Business Website", key: "bizWebsite" },
-        { header: "Store Name", key: "storeName" },
+        // { header: "Business Website", key: "bizWebsite" },
         { header: "Rating Text", key: "ratingText" },
         { header: "Stars", key: "stars" },
         { header: "Number of Reviews", key: "numberOfReviews" },

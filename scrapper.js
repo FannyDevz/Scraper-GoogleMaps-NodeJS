@@ -116,26 +116,23 @@ async function searchGoogleMaps() {
             const lastChild = children.last();
             const firstOfLast = lastChild.children().first();
             const lastOfLast = lastChild.children().last();
+            const image =  parent.find("img").attr("src");
 
             buisnesses.push({
                 placeId: `ChI${url?.split("?")?.[0]?.split("ChI")?.[1]}`,
+                image: image,
                 address: firstOfLast?.text()?.split("·")?.[1]?.trim(),
                 category: firstOfLast?.text()?.split("·")?.[0]?.trim(),
-                phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
+                // phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
                 googleUrl: url,
-                bizWebsite: website,
+                // bizWebsite: website,
                 storeName,
                 ratingText,
-                stars: ratingText?.split("stars")?.[0]?.trim()
-                    ? Number(ratingText?.split("stars")?.[0]?.trim())
+                stars: ratingText?.split(" ")?.[1]?.trim()
+                    ? ratingText?.split(" ")?.[1]?.trim()
                     : null,
-                numberOfReviews: ratingText
-                    ?.split("stars")?.[1]
-                    ?.replace("Reviews", "")
-                    ?.trim()
-                    ? Number(
-                        ratingText?.split("stars")?.[1]?.replace("Reviews", "")?.trim()
-                    )
+                numberOfReviews: ratingText?.split(" ")?.[2]?.trim()
+                    ? ratingText?.split(" ")?.[2]?.trim()
                     : null,
             });
         });
