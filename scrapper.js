@@ -98,7 +98,8 @@ async function searchGoogleMaps(searchQuery) {
         parents.forEach((parent) => {
             const url = parent.find("a").attr("href");
             // get a tag where data-value="Website"
-            const website = parent.find('a[data-value="Website"]').attr("href");
+            // const website = parent.find('a[data-value="Website"]').attr("href");
+            const website =parent.find('a[data-value]').attr('href')
             // find a div that includes the class fontHeadlineSmall
             const storeName = parent.find("div.fontHeadlineSmall").text();
             // find span that includes class fontBodyMedium
@@ -113,15 +114,14 @@ async function searchGoogleMaps(searchQuery) {
             const firstOfLast = lastChild.children().first();
             const lastOfLast = lastChild.children().last();
             const image =  parent.find("img").attr("src");
-
             buisnesses.push({
                 placeId: `ChI${url?.split("?")?.[0]?.split("ChI")?.[1]}`,
                 image: image,
                 address: firstOfLast?.text()?.split("·")?.[1]?.trim(),
                 category: firstOfLast?.text()?.split("·")?.[0]?.trim(),
-                // phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
+                phone: lastOfLast?.text()?.split("·")?.[1]?.trim(),
                 googleUrl: url,
-                // bizWebsite: website,
+                bizWebsite: website,
                 storeName,
                 ratingText,
                 stars: ratingText?.split(" ")?.[1]?.trim()

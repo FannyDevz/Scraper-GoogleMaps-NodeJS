@@ -2,7 +2,6 @@ import searchGoogleMaps from "./scrapper.js";
 import ExcelJS from "exceljs";
 import { program } from 'commander';
 
-
 program
   .command('search')
   .description('Fetch businesses from Google Maps')
@@ -15,8 +14,7 @@ program
     }
     searchGoogleMaps(query)
       .then((businesses) => {
-        console.log("Businesses:", businesses);
-        saveToExcel(businesses);
+        saveToExcel(businesses , query);
       })
       .catch((error) => {
         console.error("Error:", error.message);
@@ -26,7 +24,7 @@ program
 program.parse(process.argv);
 
 // Function to save data to Excel
-function saveToExcel(businesses) {
+function saveToExcel(businesses, query) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Businesses");
 
@@ -36,9 +34,9 @@ function saveToExcel(businesses) {
         { header: "Store Name", key: "storeName" },
         { header: "Address", key: "address" },
         { header: "Category", key: "category" },
-        // { header: "Phone", key: "phone" },
+        { header: "Phone", key: "phone" },
         { header: "Google URL", key: "googleUrl" },
-        // { header: "Business Website", key: "bizWebsite" },
+        { header: "Business Website", key: "bizWebsite" },
         { header: "Rating Text", key: "ratingText" },
         { header: "Stars", key: "stars" },
         { header: "Number of Reviews", key: "numberOfReviews" },
@@ -50,7 +48,7 @@ function saveToExcel(businesses) {
     });
 
     // Save the workbook to a file
-    const fileName = "businesses.xlsx";
+    const fileName = `./data/${Date.now()}-${query}.xlsx`;
     workbook.xlsx.writeFile(fileName)
         .then(() => {
             console.log(`Businesses saved to ${fileName}`);
