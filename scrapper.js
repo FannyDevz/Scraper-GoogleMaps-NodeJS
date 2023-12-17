@@ -1,10 +1,8 @@
-
 import * as cheerio from "cheerio";
 import puppeteerExtra from "puppeteer-extra";
 import stealthPlugin from "puppeteer-extra-plugin-stealth";
-import chromium from "@sparticuz/chromium";
 
-async function searchGoogleMaps() {
+async function searchGoogleMaps(searchQuery) {
     try {
         const start = Date.now();
 
@@ -27,11 +25,9 @@ async function searchGoogleMaps() {
 
         const page = await browser.newPage();
 
-        const query = "Coffee Shop Kediri";
-
         try {
             await page.goto(
-                `https://www.google.com/maps/search/${query.split(" ").join("+")}`
+                `https://www.google.com/maps/search/${searchQuery.split(" ").join("+")}`
             );
         } catch (error) {
             console.log("error going to page");

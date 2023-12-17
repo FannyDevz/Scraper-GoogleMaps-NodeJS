@@ -1,14 +1,29 @@
 import searchGoogleMaps from "./scrapper.js";
 import ExcelJS from "exceljs";
+import { program } from 'commander';
 
-searchGoogleMaps()
-    .then((businesses) => {
+
+program
+  .command('search')
+  .description('Fetch businesses from Google Maps')
+  .option('-q, --query <query>', 'Search query')
+  .action((options) => {
+    const { query } = options;
+    if (!query) {
+      console.error('Please provide a search query using -q or --query.');
+      process.exit(1);
+    }
+    searchGoogleMaps(query)
+      .then((businesses) => {
         console.log("Businesses:", businesses);
         saveToExcel(businesses);
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error("Error:", error.message);
-    });
+      });
+  });
+
+program.parse(process.argv);
 
 // Function to save data to Excel
 function saveToExcel(businesses) {
